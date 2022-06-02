@@ -205,7 +205,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &117080819
 GameObject:
@@ -216,13 +216,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 117080820}
+  - component: {fileID: 117080821}
   m_Layer: 0
   m_Name: Builder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &117080820
 Transform:
   m_ObjectHideFlags: 0
@@ -231,13 +232,33 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117080819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: 15, z: 0}
+  m_LocalPosition: {x: 4, y: 16, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &117080821
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117080819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe5299a9c6f606a48b09ff5ccafdea71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FindObject:
+  - {fileID: 8553767977210965263, guid: 335e341bf949cfe47abb6eb1921fc2c9, type: 3}
+  - {fileID: 4294970239456332954, guid: 4a1b44d90489bf54081b9c27d06ecd49, type: 3}
+  - {fileID: 7153348329353083574, guid: 1c64e299c311c3a4ca5a873e46f5f2bd, type: 3}
+  - {fileID: 1615430026934448709, guid: d09fa775cc755624983feaef6bfd6d32, type: 3}
+  - {fileID: 3148529373757006931, guid: 3e500c49f5e5cb44cb74c86f19b0ebef, type: 3}
+  - {fileID: 8294456306676014557, guid: 632e8cd83ff62e444a8c6acd9627a163, type: 3}
+  - {fileID: 8410714666042305662, guid: 4fc29de5fa5af8245b06456f7269be46, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +402,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.38927847, g: 0.09109115, b: 0.8396226, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

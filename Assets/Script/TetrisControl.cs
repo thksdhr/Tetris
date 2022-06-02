@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -7,10 +5,11 @@ namespace Tetris
 {
     public class TetrisControl : MonoBehaviour
     {
-        private Vector3 nowCoordinate;//存放转换的坐标
+        public Vector3 mCoordinate;//旋转中心
         private float IntervalsTime = 0.8f;//间隔时间
         private float lastTime;//最后运动时间
         private static int Width = 9, Height = 16;
+        private static Transform[,] Grid = new Transform[Width, Height];
         void Start()
         {
 
@@ -51,6 +50,9 @@ namespace Tetris
                 if (!ValidMove())//如果超出边界，就朝相反方向移动来抵消
                 {
                     transform.position += new Vector3(0, 1, 0);
+                    AddToGrid();//添加块坐标到二位数组
+                    this.enabled = false;//停用这个块
+                    GameObject.Find("Builder").GetComponent<QenerateObject>().andomBuilder();
                 }
             }
         }
@@ -61,24 +63,41 @@ namespace Tetris
                 //获取角色当前的取整XY值
                 int nowX = Mathf.RoundToInt(element.transform.position.x);
                 int nowY = Mathf.RoundToInt(element.transform.position.y);
-                if (nowX >= Width || nowY >= Height || nowX < 0 || nowY < 0)
+                if (nowX >= Width || nowX < 0 || nowY < 0)
                 {
                     return false;
+                }
+                if (nowX < Width && nowY < Height)
+                {
+                    if (Grid[nowX, nowY] != null)
+                    {
+                        return false;
+                    }
+
                 }
             }
             return (true);
         }
-        private void Rotate()
+        private void Rotate()//旋转方块
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                //transform.RotateAround改变位置和旋转--传入参数（变换的坐标"必须是世界坐标"，按照那个轴旋转，旋转角度）
-                //Transform.TransformPoint将'传入'的本地坐标变换为'世界'坐标
-                transform.RotateAround(transform.TransformPoint(nowCoordinate), new Vector3(1, 0, 0), 90);
+                //transform.RotateAround改变位置和旋转--传入参数（旋转的坐标"必须是世界坐标"，按照那个轴旋转，旋转角度）
+                //Transform.TransformPoint将'传入'的本地[相对]坐标变换为'世界'[绝对]坐标
+                transform.RotateAround(transform.TransformPoint(mCoordinate), new Vector3(0, 0, 1), 90);
                 if (!ValidMove())//如果超出边界，就朝相反方向移动来抵消
                 {
-                    transform.RotateAround(transform.TransformPoint(nowCoordinate), new Vector3(0, 0, 1), -90);
+                    transform.RotateAround(transform.TransformPoint(mCoordinate), new Vector3(0, 0, 1), -90);
                 }
+            }
+        }
+        private void AddToGrid()//添加块到网格
+        {
+            foreach (Transform element in transform)
+            {
+                int nowX = Mathf.RoundToInt(element.transform.position.x);
+                int nowY = Mathf.RoundToInt(element.transform.position.y);
+                Grid[nowX, nowY] = element;//将每个小格子的坐标添加到二位数组
             }
         }
     }
