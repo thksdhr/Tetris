@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace Tetris
 {
     public class TetrisControl : MonoBehaviour
@@ -46,10 +45,21 @@ namespace Tetris
                 if (!ValidMove())//如果超出边界，就朝相反方向移动来抵消
                 {
                     transform.position += new Vector3(0, 1, 0);
-                    AddToGrid();//添加块坐标到二位数组
+                    if (GameOver())
+                    {
+                        GameObject.Find("Canvas").GetComponent<ShowMe>().Timer = false;//停止更新用时
+                        GameObject.Find("Canvas").GetComponent<EndGame>().GameOverUI();//启用游戏失败画面
+                        this.gameObject.SetActive(false);
+                        return;
+                    }
+                    else
+                    {
+                        AddToGrid();//添加块坐标到二维数组
+                        GameObject.Find("Builder").GetComponent<QenerateObject>().andomBuilder();
+                        PerfectClear();
+                    }
                     this.enabled = false;//停用这个块
-                    GameObject.Find("Builder").GetComponent<QenerateObject>().andomBuilder();
-                    aClearLine();
+
                 }
             }
         }
@@ -97,7 +107,7 @@ namespace Tetris
                 Grid[nowX, nowY] = element;//将每个小格子的坐标添加到二位数组
             }
         }
-        private void aClearLine()
+        private void PerfectClear()
         {
             //从上往下检查每一行
             for (int i = Height - 1; i >= 0; i--)
@@ -146,6 +156,19 @@ namespace Tetris
                     }
                 }
             }
+        }
+        private bool GameOver()//检查游戏是否满足结束条件
+        {
+            foreach (Transform element in transform)
+            {
+                int nowY = Mathf.RoundToInt(element.transform.position.y);
+                if (nowY >= Height)
+                {
+                    GameObject.Find("Builder").SetActive(false);//停用生成新方块的脚本
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
